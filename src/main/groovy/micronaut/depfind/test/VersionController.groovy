@@ -19,10 +19,22 @@ class VersionController {
     @Get("/")
     def index() {
         [
-            title: version.implementationTitle,
-            version: version.implementationVersion,
-            date: version.copyrightDate,
-            holder: version.copyrightHolder,
+                implementation: [
+                        title: version.implementationTitle,
+                        version: version.implementationVersion,
+                        vendor: version.implementationVendor,
+                        date: version.implementationDate,
+                ],
+                specification: [
+                        title: version.specificationTitle,
+                        version: version.specificationVersion,
+                        vendor: version.specificationVendor,
+                        date: version.specificationDate,
+                ],
+                copyright: [
+                        date: version.copyrightDate,
+                        holder: version.copyrightHolder,
+                ],
         ]
     }
 
