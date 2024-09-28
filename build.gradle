@@ -25,6 +25,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-api")
     // implementation("oro:oro)
     implementation(files("lib/oro-2.0.8.jar"))
+    runtimeOnly("org.apache.logging.log4j:log4j-core")
 }
 
 

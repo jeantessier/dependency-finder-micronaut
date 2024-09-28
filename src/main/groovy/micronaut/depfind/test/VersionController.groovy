@@ -16,7 +16,7 @@ class VersionController {
         this.version = version
     }
 
-    @Get("/")
+    @Get
     def index() {
         [
                 implementation: [
