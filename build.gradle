@@ -21,7 +21,7 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     testImplementation("io.micronaut:micronaut-http-client")
 
-    implementation(files("lib/DependencyFinder-1.4.0.jar"))
+    implementation(files("lib/DependencyFinder-SNAPSHOT.jar"))
     implementation("org.apache.logging.log4j:log4j-api")
     // implementation("oro:oro)
     implementation(files("lib/oro-2.0.8.jar"))
