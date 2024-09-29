@@ -26,43 +26,42 @@ class DependencyGraph {
     @Value('${dependency.finder.name}')
     def name
 
-    @Value('${dependency.finder.graph.source}')
-    def source
-
-    @Value('${dependency.finder.graph.filter.includes://}')
-    String filterIncludes
-
-    @Value('${dependency.finder.graph.filter.excludes:}')
-    String filterExcludes
-
-    @Value('${dependency.finder.graph.file}')
-    String file
-
     @Value('${dependency.finder.graph.mode:raw}')
     def mode
 
-    def start
-    def duration
+    def label
+
+    def extractStart
+    def extractDurationInMillis
+
+    def updateStart
+    def updateDurationInMillis
+
+    def loadStart
+    def loadDurationInMillis
 
     def getStats() {
         [
                 name: name,
-                start: start,
-                duration: duration,
+                label: label,
+                extractStart: extractStart,
+                extractDurationInMillis: extractDurationInMillis,
+                updateStart: updateStart,
+                updateDurationInMillis: updateDurationInMillis,
+                loadStart: loadStart,
+                loadDurationInMillis: loadDurationInMillis,
                 nbPackages: factory.packages.size(),
                 nbClasses: factory.classes.size(),
                 nbFeatures: factory.features.size(),
         ]
     }
 
-    def extract() {
+    def extract(String source, filterIncludes, filterExcludes, label) {
         def start = new Date()
 
-        def sources = source.split(/,/) as List
+        factory = new NodeFactory()
 
-        def factory = new NodeFactory()
-
-        def dispatcher = new ModifiedOnlyDispatcher(ClassfileLoaderEventSource.DEFAULT_DISPATCHER)
+        dispatcher = new ModifiedOnlyDispatcher(ClassfileLoaderEventSource.DEFAULT_DISPATCHER)
 
         def filterCriteria = new RegularExpressionSelectionCriteria()
         filterCriteria.globalIncludes = filterIncludes
@@ -71,10 +70,12 @@ class DependencyGraph {
         def collector = new CodeDependencyCollector(factory, filterCriteria)
         def deletingVisitor = new DeletingVisitor(factory)
 
-        def monitor = new Monitor(collector, deletingVisitor)
+        monitor = new Monitor(collector, deletingVisitor)
 
         def loader = new TransientClassfileLoader(dispatcher)
         loader.addLoadListener(monitor)
+
+        def sources = source.split(/,/) as List
         loader.load(sources)
 
         if (mode == "maximize") {
@@ -85,21 +86,63 @@ class DependencyGraph {
 
         def stop = new Date()
 
-        this.start = start
-        this.duration = stop.time - start.time
-        this.factory = factory
-        this.dispatcher = dispatcher
-        this.monitor = monitor
+        this.label = label
+
+        this.extractStart = start
+        this.extractDurationInMillis = stop.time - start.time
+
+        this.updateStart = null
+        this.updateDurationInMillis = null
+        this.loadStart = null
+        this.loadDurationInMillis = null
     }
 
-    def load() {
+    def update(String source, filterIncludes, filterExcludes, label) {
         def start = new Date()
 
-        def files = file.split(/,/)
+        dispatcher = dispatcher ?: new ModifiedOnlyDispatcher(ClassfileLoaderEventSource.DEFAULT_DISPATCHER)
 
-        def factory = new NodeFactory()
+        def filterCriteria = new RegularExpressionSelectionCriteria()
+        filterCriteria.globalIncludes = filterIncludes
+        filterCriteria.globalExcludes = filterExcludes
+
+        def collector = new CodeDependencyCollector(factory, filterCriteria)
+        def deletingVisitor = new DeletingVisitor(factory)
+
+        monitor = monitor ?: new Monitor(collector, deletingVisitor)
+
+        def loader = new TransientClassfileLoader(dispatcher)
+        loader.addLoadListener(monitor)
+
+        def sources = source.split(/,/) as List
+        loader.load(sources)
+
+        if (mode == "maximize") {
+            new LinkMaximizer().traverseNodes(factory.packages.values())
+        } else if (mode == "minimize") {
+            new LinkMinimizer().traverseNodes(factory.packages.values())
+        }
+
+        def stop = new Date()
+
+        this.label = label
+
+        this.extractStart = this.extractStart ?: start
+        this.extractDurationInMillis = this.extractDurationInMillis ?: (stop.time - start.time)
+        this.updateStart = start
+        this.updateDurationInMillis = stop.time - start.time
+
+        this.loadStart = null
+        this.loadDurationInMillis = null
+    }
+
+    def load(String file, label) {
+        def start = new Date()
+
+        factory = new NodeFactory()
+
         def loader = new NodeLoader(factory)
-
+        def files = file.split(/,/)
         files.each { loader.load(it) }
 
         if (mode == "maximize") {
@@ -110,9 +153,17 @@ class DependencyGraph {
 
         def stop = new Date()
 
-        this.start = start
-        this.duration = stop.time - start.time
-        this.factory = factory
+        this.label = label
+
+        this.loadStart = start
+        this.loadDurationInMillis = stop.time - start.time
+
+        this.dispatcher = null
+        this.monitor = null
+        this.extractStart = null
+        this.extractDurationInMillis = null
+        this.updateStart = null
+        this.updateDurationInMillis = null
     }
     
     def query(packageScope, classScope, featureScope, scopeIncludes, scopeExcludes, packageFilter, classFilter, featureFilter, filterIncludes, filterExcludes) {
@@ -131,13 +182,13 @@ class DependencyGraph {
         filterCriteria.globalIncludes = filterIncludes
         filterCriteria.globalExcludes = filterExcludes
 
-        def dependenciesQuery = new GraphSummarizer(scopeCriteria, filterCriteria);
+        def dependenciesQuery = new GraphSummarizer(scopeCriteria, filterCriteria)
         if (mode == "maximize") {
-            def strategy = new SelectiveTraversalStrategy(scopeCriteria, filterCriteria);
-            dependenciesQuery = new GraphCopier(strategy);
+            def strategy = new SelectiveTraversalStrategy(scopeCriteria, filterCriteria)
+            dependenciesQuery = new GraphCopier(strategy)
         }
 
-        dependenciesQuery.traverseNodes(factory.packages.values());
+        dependenciesQuery.traverseNodes(factory.packages.values())
 
         dependenciesQuery
     }

@@ -1,5 +1,7 @@
 package micronaut.depfind.test
 
+import io.micronaut.context.annotation.Value
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -8,6 +10,9 @@ import jakarta.inject.Inject
 
 @Controller("/load")
 class LoadController {
+
+    @Value('${dependency.finder.load.file}')
+    String file
 
     final DependencyGraph graph
 
@@ -18,12 +23,17 @@ class LoadController {
 
     @Get
     def index() {
-        graph.stats
+        [
+                load: [
+                        file: file,
+                ],
+                graph: graph.stats,
+        ]
     }
 
     @Post
-    def load() {
-        graph.load()
+    def load(@Nullable label) {
+        graph.load(file, label)
 
         HttpResponse.redirect(new URI("/load"))
     }

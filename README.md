@@ -22,12 +22,24 @@ http :8080/extract
 
 ```json
 {
-  "name": "Dependency Finder",
-  "start": "2024-09-28T04:59:28.038Z",
-  "duration": 534,
-  "nbPackages": 42,
-  "nbClasses": 872,
-  "nbFeatures": 8710
+  "extract": {
+    "source": "lib/DependencyFinder-SNAPSHOT.jar",
+    "filterIncludes": "//",
+    "filterExcludes": "/^java/, /^org/"
+  },
+  "graph": {
+    "name": "Dependency Finder",
+    "label": null,
+    "extractStart": "2024-09-29T23:30:35.728Z",
+    "extractDurationInMillis": 548,
+    "updateStart": null,
+    "updateDurationInMillis": null,
+    "loadStart": null,
+    "loadDurationInMillis": null,
+    "nbPackages": 23,
+    "nbClasses": 691,
+    "nbFeatures": 8108
+  }
 }
 ```
 
@@ -40,14 +52,66 @@ http --follow POST :8080/extract
 
 ```json
 {
-  "name": "Dependency Finder",
-  "start": "2024-09-28T04:59:28.038Z",
-  "duration": 534,
-  "nbPackages": 42,
-  "nbClasses": 872,
-  "nbFeatures": 8710
+  "extract": {
+    "source": "lib/DependencyFinder-SNAPSHOT.jar",
+    "filterIncludes": "//",
+    "filterExcludes": "/^java/, /^org/"
+  },
+  "graph": {
+    "name": "Dependency Finder",
+    "label": null,
+    "extractStart": "2024-09-29T23:30:35.728Z",
+    "extractDurationInMillis": 548,
+    "updateStart": null,
+    "updateDurationInMillis": null,
+    "loadStart": null,
+    "loadDurationInMillis": null,
+    "nbPackages": 23,
+    "nbClasses": 691,
+    "nbFeatures": 8108
+  }
 }
 ```
+
+You can supply an optional `label` parameter that will be saved
+along with the graph.  You can use this label to qualify the version
+of the code the graph is being extracted from.
+
+### To Update an Extracted Graph After Code Changes
+
+If you make changes and recompile your code, you can update the graph
+through the `/extract` endpoint by adding an `update` parameter.
+
+```bash
+http --follow POST :8080/extract update=true
+```
+
+```json
+{
+  "extract": {
+    "source": "lib/DependencyFinder-SNAPSHOT.jar",
+    "filterIncludes": "//",
+    "filterExcludes": "/^java/, /^org/"
+  },
+  "graph": {
+    "name": "Dependency Finder",
+    "label": null,
+    "extractStart": "2024-09-29T23:30:35.728Z",
+    "extractDurationInMillis": 548,
+    "updateStart": "2024-09-29T23:32:41.475Z",
+    "updateDurationInMillis": 26,
+    "loadStart": null,
+    "loadDurationInMillis": null,
+    "nbPackages": 23,
+    "nbClasses": 691,
+    "nbFeatures": 8108
+  }
+}
+```
+
+You can update the label associated with the graph with the
+`label` parameter.  If you don't supply a `label`, it will be
+removed from the graph.
 
 ### To Load a Graph From a File
 
@@ -62,12 +126,22 @@ http :8080/load
 
 ```json
 {
-  "name": "Dependency Finder",
-  "start": "2024-09-28T04:59:28.038Z",
-  "duration": 534,
-  "nbPackages": 42,
-  "nbClasses": 872,
-  "nbFeatures": 8710
+  "load": {
+    "file": "df.xml"
+  },
+  "graph": {
+    "name": "Dependency Finder",
+    "label": null,
+    "extractStart": null,
+    "extractDurationInMillis": null,
+    "updateStart": null,
+    "updateDurationInMillis": null,
+    "loadStart": "2024-09-29T23:51:50.206Z",
+    "loadDurationInMillis": 192,
+    "nbPackages": 42,
+    "nbClasses": 872,
+    "nbFeatures": 8710
+  }
 }
 ```
 
@@ -80,14 +154,28 @@ http --follow POST :8080/load
 
 ```json
 {
-  "name": "Dependency Finder",
-  "start": "2024-09-28T04:59:28.038Z",
-  "duration": 534,
-  "nbPackages": 42,
-  "nbClasses": 872,
-  "nbFeatures": 8710
+  "load": {
+    "file": "df.xml"
+  },
+  "graph": {
+    "name": "Dependency Finder",
+    "label": null,
+    "extractStart": null,
+    "extractDurationInMillis": null,
+    "updateStart": null,
+    "updateDurationInMillis": null,
+    "loadStart": "2024-09-29T23:51:50.206Z",
+    "loadDurationInMillis": 192,
+    "nbPackages": 42,
+    "nbClasses": 872,
+    "nbFeatures": 8710
+  }
 }
 ```
+
+You can supply an optional `label` parameter that will be saved
+along with the graph.  You can use this label to qualify the version
+of the code the graph is being extracted from.
 
 ## To Query a Graph
 
