@@ -76,9 +76,9 @@ class QueryController {
         renderQuery(dependenciesQuery, command.showInbounds, command.showOutbounds, command.showEmptyNodes)
     }
 
-    def renderQuery(dependenciesQuery, showInbounds, showOutbounds, showEmptyNodes) {
+    private static renderQuery(dependenciesQuery, showInbounds, showOutbounds, showEmptyNodes) {
         def out = new StringWriter()
-        def printer = new JSONPrinter(new PrintWriter(out));
+        def printer = new JSONPrinter(new PrintWriter(out))
 
         if (showInbounds != null || showOutbounds != null || showEmptyNodes != null) {
             printer.showInbounds = showInbounds == "on" || Boolean.valueOf(showInbounds)
@@ -86,7 +86,7 @@ class QueryController {
             printer.showEmptyNodes = showEmptyNodes == "on" || Boolean.valueOf(showEmptyNodes)
         }
 
-        printer.traverseNodes(dependenciesQuery.getScopeFactory().getPackages().values());
+        printer.traverseNodes(dependenciesQuery.scopeFactory.packages.values())
 
         out.toString()
     }
