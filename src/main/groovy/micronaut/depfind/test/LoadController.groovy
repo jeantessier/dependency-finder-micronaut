@@ -35,7 +35,7 @@ class LoadController {
     def load(@Nullable label) {
         graph.load(file, label)
 
-        HttpResponse.redirect(new URI("/load"))
+        HttpResponse.temporaryRedirect(new URI("/load"))
     }
 
 }

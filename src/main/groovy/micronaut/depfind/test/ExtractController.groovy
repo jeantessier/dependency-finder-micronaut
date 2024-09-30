@@ -47,7 +47,7 @@ class ExtractController {
             graph.extract(source, filterIncludes, filterExcludes, label)
         }
 
-        HttpResponse.redirect(new URI("/extract"))
+        HttpResponse.temporaryRedirect(new URI("/extract"))
     }
 
 }
