@@ -19,6 +19,7 @@ import jakarta.inject.Singleton
 
 @Singleton
 class DependencyGraph {
+
     def factory = new NodeFactory()
     def dispatcher
     def monitor
