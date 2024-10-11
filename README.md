@@ -188,8 +188,8 @@ http :8080/query \
   packageFilter=on \
   scopeIncludes=/^com.jeantessier/ \
   filterIncludes=/^com.jeantessier/ \
-  showInbounds= \
-  showEmptyNodes=
+  showInbounds=true \
+  showEmptyNodes=true
 ```
 
 ```json
