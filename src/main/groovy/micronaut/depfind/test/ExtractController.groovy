@@ -1,5 +1,6 @@
 package micronaut.depfind.test
 
+import com.jeantessier.text.RegularExpressionParser
 import io.micronaut.context.annotation.Value
 import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpResponse
@@ -31,9 +32,9 @@ class ExtractController {
     def index() {
         [
                 extract: [
-                        source: source,
-                        filterIncludes: filterIncludes,
-                        filterExcludes: filterExcludes,
+                        sources: source.split(/,\\s*/),
+                        filterIncludes: RegularExpressionParser.parseRE(filterIncludes),
+                        filterExcludes: RegularExpressionParser.parseRE(filterExcludes),
                 ],
                 graph: graph.stats,
         ]
