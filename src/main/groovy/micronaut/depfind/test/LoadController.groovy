@@ -25,7 +25,7 @@ class LoadController {
     def index() {
         [
                 load: [
-                        file: file,
+                        files: file.split(/,\\s*/),
                 ],
                 graph: graph.stats,
         ]
