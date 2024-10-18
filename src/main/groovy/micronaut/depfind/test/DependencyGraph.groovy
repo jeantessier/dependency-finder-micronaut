@@ -60,8 +60,8 @@ class DependencyGraph {
         ]
     }
 
-    def extract(String source, filterIncludes, filterExcludes, label) {
-        logger.info("Extracting new graph from {}", source)
+    def extract(List<String> sources, filterIncludes, filterExcludes, label) {
+        logger.info("Extracting new graph from {}", sources)
 
         def start = new Date()
 
@@ -80,8 +80,6 @@ class DependencyGraph {
 
         def loader = new TransientClassfileLoader(dispatcher)
         loader.addLoadListener(monitor)
-
-        def sources = source.split(/,/) as List
         loader.load(sources)
 
         if (mode == "maximize") {
@@ -103,8 +101,8 @@ class DependencyGraph {
         this.loadDurationInMillis = null
     }
 
-    def update(String source, filterIncludes, filterExcludes, label) {
-        logger.info("Updating graph based on {}", source)
+    def update(List<String> sources, filterIncludes, filterExcludes, label) {
+        logger.info("Updating graph based on {}", sources)
 
         def start = new Date()
 
@@ -121,8 +119,6 @@ class DependencyGraph {
 
         def loader = new TransientClassfileLoader(dispatcher)
         loader.addLoadListener(monitor)
-
-        def sources = source.split(/,/) as List
         loader.load(sources)
 
         if (mode == "maximize") {
@@ -144,16 +140,15 @@ class DependencyGraph {
         this.loadDurationInMillis = null
     }
 
-    def load(String file, label) {
-        logger.info("Loading new graph from {}", file)
+    def load(List<String> files, label) {
+        logger.info("Loading new graph from {}", files)
 
         def start = new Date()
 
         factory = new NodeFactory()
 
         def loader = new NodeLoader(factory)
-        def files = file.split(/,/)
-        files.each { loader.load(it) }
+        files.each { loader.load it }
 
         if (mode == "maximize") {
             new LinkMaximizer().traverseNodes(factory.packages.values())

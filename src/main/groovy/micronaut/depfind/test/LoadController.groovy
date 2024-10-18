@@ -19,6 +19,10 @@ class LoadController {
 
     final DependencyGraph graph
 
+    def getFiles() {
+        file.split(/,\\s*/) as List
+    }
+
     @Inject
     LoadController(DependencyGraph graph) {
         this.graph = graph
@@ -28,7 +32,7 @@ class LoadController {
     def index() {
         [
                 load: [
-                        files: file.split(/,\\s*/),
+                        files: files,
                 ],
                 graph: graph.stats,
         ]
@@ -39,7 +43,7 @@ class LoadController {
         logger.info("POST load")
         logger.info("    label: {}", label)
 
-        graph.load(file, label)
+        graph.load(files, label)
 
         HttpResponse.temporaryRedirect(new URI("/load"))
     }

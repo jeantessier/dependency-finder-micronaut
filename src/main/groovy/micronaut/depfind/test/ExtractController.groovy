@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory
 @Controller("/extract")
 class ExtractController {
 
-    private static final logger = LoggerFactory.getLogger(ExtractController);
+    private static final logger = LoggerFactory.getLogger(ExtractController)
 
     @Value('${dependency.finder.extract.source}')
-    def source
+    String source
 
     @Value('${dependency.finder.extract.filter.includes://}')
     String filterIncludes
@@ -25,6 +25,10 @@ class ExtractController {
     String filterExcludes
 
     final DependencyGraph graph
+
+    def getSources() {
+        source.split(/,\\s*/) as List
+    }
 
     @Inject
     ExtractController(DependencyGraph graph) {
@@ -35,7 +39,7 @@ class ExtractController {
     def index() {
         [
                 extract: [
-                        sources: source.split(/,\\s*/),
+                        sources: sources,
                         filterIncludes: RegularExpressionParser.parseRE(filterIncludes),
                         filterExcludes: RegularExpressionParser.parseRE(filterExcludes),
                 ],
@@ -50,9 +54,9 @@ class ExtractController {
         logger.info("    update: {}", update)
 
         if (graph.stats.extractStart && update) {
-            graph.update(source, filterIncludes, filterExcludes, label)
+            graph.update(sources, filterIncludes, filterExcludes, label)
         } else {
-            graph.extract(source, filterIncludes, filterExcludes, label)
+            graph.extract(sources, filterIncludes, filterExcludes, label)
         }
 
         HttpResponse.temporaryRedirect(new URI("/extract"))
