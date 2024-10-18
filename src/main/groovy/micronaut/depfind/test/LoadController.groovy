@@ -7,9 +7,12 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import jakarta.inject.Inject
+import org.slf4j.LoggerFactory
 
 @Controller("/load")
 class LoadController {
+
+    private static final logger = LoggerFactory.getLogger(LoadController)
 
     @Value('${dependency.finder.load.file}')
     String file
@@ -32,7 +35,10 @@ class LoadController {
     }
 
     @Post
-    def load(@Nullable label) {
+    def load(@Nullable String label) {
+        logger.info("POST load")
+        logger.info("    label: {}", label)
+
         graph.load(file, label)
 
         HttpResponse.temporaryRedirect(new URI("/load"))

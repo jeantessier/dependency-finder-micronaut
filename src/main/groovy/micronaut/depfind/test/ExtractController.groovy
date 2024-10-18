@@ -8,9 +8,12 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import jakarta.inject.Inject
+import org.slf4j.LoggerFactory
 
 @Controller("/extract")
 class ExtractController {
+
+    private static final logger = LoggerFactory.getLogger(ExtractController);
 
     @Value('${dependency.finder.extract.source}')
     def source
@@ -41,7 +44,11 @@ class ExtractController {
     }
 
     @Post
-    def extract(@Nullable label, @Nullable update) {
+    def extract(@Nullable String label, @Nullable Boolean update) {
+        logger.info("POST extract")
+        logger.info("    label: {}", label)
+        logger.info("    update: {}", update)
+
         if (graph.stats.extractStart && update) {
             graph.update(source, filterIncludes, filterExcludes, label)
         } else {

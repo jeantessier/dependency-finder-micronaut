@@ -16,9 +16,12 @@ import com.jeantessier.dependency.RegularExpressionSelectionCriteria
 import com.jeantessier.dependency.SelectiveTraversalStrategy
 import io.micronaut.context.annotation.Value
 import jakarta.inject.Singleton
+import org.slf4j.LoggerFactory
 
 @Singleton
 class DependencyGraph {
+
+    private static final logger = LoggerFactory.getLogger(DependencyGraph)
 
     def factory = new NodeFactory()
     def dispatcher
@@ -58,6 +61,8 @@ class DependencyGraph {
     }
 
     def extract(String source, filterIncludes, filterExcludes, label) {
+        logger.info("Extracting new graph from {}", source)
+
         def start = new Date()
 
         factory = new NodeFactory()
@@ -99,6 +104,8 @@ class DependencyGraph {
     }
 
     def update(String source, filterIncludes, filterExcludes, label) {
+        logger.info("Updating graph based on {}", source)
+
         def start = new Date()
 
         dispatcher = dispatcher ?: new ModifiedOnlyDispatcher(ClassfileLoaderEventSource.DEFAULT_DISPATCHER)
@@ -138,6 +145,8 @@ class DependencyGraph {
     }
 
     def load(String file, label) {
+        logger.info("Loading new graph from {}", file)
+
         def start = new Date()
 
         factory = new NodeFactory()
