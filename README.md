@@ -4,6 +4,55 @@ A sample application that uses the Dependency Finder library.
 
 The application is configured in `application.properties`.
 
+## Running the App
+
+The default configuration in `application.properties` expects to extract 
+dependencies from `./lib/DependencyFinder-SNAPSHOT.jar`.  It also expects to 
+load a dependency graph from `./df.xml`.  You can change these expectations 
+by changing in the configuration in `application.properties`.
+
+The app will run on port `8080`.
+
+### In Local Shell
+
+```bash
+./gradlew run
+```
+
+### In Docker
+
+First, build the image.  See the
+[Micronaut Docker documentation](https://guides.micronaut.io/latest/micronaut-docker-image-gradle-groovy.html)
+for more options.
+
+```bash
+./gradlew dockerBuild
+```
+
+Once you have a Docker image, you can create a container.
+
+```bash
+docker run \
+  --name dependencyfinder
+  --detach \
+  --publish "8080:8080" \
+  --volume ./lib/DependencyFinder-SNAPSHOT.jar:/home/app/lib/DependencyFinder-SNAPSHOT.jar:ro \ 
+  --volume ./df.xml:/home/app/df.xml:ro \ 
+  micronaut-depfind-test
+```
+
+The `--volume` params will mount the source and graph files the app expects, 
+according to `application.properties`.  If you change the configuration, you 
+will need to adjust these params accordingly.
+
+To clean up Docker:
+
+```bash
+docker stop dependencyfinder
+docker rm dependencyfinder
+docker rmi micronaut-depfind-test
+```
+
 ## Getting a Graph in Memory
 
 You can either extract a graph from compiled Java code, or you can
