@@ -20,7 +20,7 @@ class LoadController {
     final DependencyGraph graph
 
     def getFiles() {
-        file.split(/,\\s*/) as List
+        file.split(/,\s*/) as List
     }
 
     @Inject

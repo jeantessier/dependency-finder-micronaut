@@ -27,7 +27,7 @@ class ExtractController {
     final DependencyGraph graph
 
     def getSources() {
-        source.split(/,\\s*/) as List
+        source.split(/,\s*/) as List
     }
 
     @Inject
