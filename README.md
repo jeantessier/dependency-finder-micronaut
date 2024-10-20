@@ -244,23 +244,23 @@ http :8080/query \
 ```json
 [
     {
-        "classes": [],
+        "type": "package",
         "confirmed": "true",
-        "inbound": [],
         "name": "com.jeantessier.classreader",
         "outbound": [
             {
+                "type": "package",
                 "confirmed": "true",
-                "name": "com.jeantessier.classreader.impl",
-                "type": "package"
+                "name": "com.jeantessier.classreader.impl"
             },
             {
+                "type": "package",
                 "confirmed": "true",
-                "name": "com.jeantessier.text",
-                "type": "package"
+                "name": "com.jeantessier.text"
             }
         ],
-        "type": "package"
+        "inbound": [],
+        "classes": []
     },
     ...
 ]
