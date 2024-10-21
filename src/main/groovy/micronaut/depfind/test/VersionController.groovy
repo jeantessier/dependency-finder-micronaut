@@ -24,6 +24,7 @@ class VersionController {
                         version: version.implementationVersion,
                         vendor: version.implementationVendor,
                         date: version.implementationDate,
+                        url: version.implementationURL,
                 ],
                 specification: [
                         title: version.specificationTitle,
