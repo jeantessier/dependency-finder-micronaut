@@ -7,9 +7,12 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.inject.Inject
+import org.slf4j.LoggerFactory
 
 @Controller("/query")
 class QueryController {
+
+    private static final logger = LoggerFactory.getLogger(QueryController)
 
     final DependencyGraph graph
 
@@ -40,6 +43,11 @@ class QueryController {
 
     @Post
     def index(@Body QueryCommand command) {
+        logger.info("POST query")
+        logger.info("    scope:  package: {}, class: {}, feature: {}, includes: \"{}\", excludes: \"{}\"", command.packageScope, command.classScope, command.featureScope, command.scopeIncludes, command.scopeExcludes)
+        logger.info("    filter: package: {}, class: {}, feature: {}, includes: \"{}\", excludes: \"{}\"", command.packageFilter, command.classFilter, command.featureFilter, command.filterIncludes, command.filterExcludes)
+        logger.info("    show: inbounds: {}, outbounds: {}, empty nodes: {}", command.showInbounds, command.showOutbounds, command.showEmptyNodes)
+
         def dependenciesQuery = graph.query(
                 command.packageScope,
                 command.classScope,

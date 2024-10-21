@@ -172,6 +172,21 @@ class DependencyGraph {
     }
     
     def query(packageScope, classScope, featureScope, scopeIncludes, scopeExcludes, packageFilter, classFilter, featureFilter, filterIncludes, filterExcludes) {
+        logger.info("Querying graph:")
+        logger.info("")
+        logger.info("    packageScope: {}", packageScope)
+        logger.info("    classScope: {}", classScope)
+        logger.info("    featureScope: {}", featureScope)
+        logger.info("    scopeIncludes: {}", scopeIncludes)
+        logger.info("    scopeExcludes: {}", scopeExcludes)
+        logger.info("")
+        logger.info("    packageFilter: {}", packageFilter)
+        logger.info("    classFilter: {}", classFilter)
+        logger.info("    featureFilter: {}", featureFilter)
+        logger.info("    filterIncludes: {}", filterIncludes)
+        logger.info("    filterExcludes: {}", filterExcludes)
+        logger.info("")
+
         def scopeCriteria  = new RegularExpressionSelectionCriteria()
         def filterCriteria = new RegularExpressionSelectionCriteria()
 
