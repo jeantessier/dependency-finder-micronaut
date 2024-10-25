@@ -233,13 +233,28 @@ the resulting subgraph as a JSON object.
 
 ```bash
 http :8080/query \
-  packageScope=on \
-  packageFilter=on \
+  packageScope:=true \
+  packageFilter:=true \
   scopeIncludes=/^com.jeantessier/ \
   filterIncludes=/^com.jeantessier/ \
-  showInbounds=true \
-  showEmptyNodes=true
+  showInbounds:=true \
+  showEmptyNodes:=true
 ```
+
+In this example, the request will look like:
+
+```json
+{
+    "filterIncludes": "/^com.jeantessier/",
+    "packageFilter": true,
+    "packageScope": true,
+    "scopeIncludes": "/^com.jeantessier/",
+    "showEmptyNodes": true,
+    "showInbounds": true
+}
+```
+
+And the response will be shaped like:
 
 ```json
 [
