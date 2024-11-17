@@ -1,8 +1,8 @@
 plugins {
     id("groovy") 
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.micronaut.application") version "4.4.2"
-    id("io.micronaut.aot") version "4.4.2"
+    id("io.micronaut.application") version "4.4.4"
+    id("io.micronaut.aot") version "4.4.4"
 }
 
 version = "0.1"
@@ -33,8 +33,8 @@ application {
     mainClass = "micronaut.depfind.test.Application"
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("21")
+    targetCompatibility = JavaVersion.toVersion("21")
 }
 
 
@@ -61,5 +61,6 @@ micronaut {
     }
 }
 
-
-
+tasks.named("dockerfileNative") {
+    jdkVersion = "21"
+}
