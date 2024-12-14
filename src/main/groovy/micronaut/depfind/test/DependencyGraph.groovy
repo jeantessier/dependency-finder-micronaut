@@ -14,6 +14,7 @@ import com.jeantessier.dependency.NodeFactory
 import com.jeantessier.dependency.NodeLoader
 import com.jeantessier.dependency.RegularExpressionSelectionCriteria
 import com.jeantessier.dependency.SelectiveTraversalStrategy
+import com.jeantessier.dependency.TransitiveClosure
 import io.micronaut.context.annotation.Value
 import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
@@ -211,5 +212,45 @@ class DependencyGraph {
         dependenciesQuery.traverseNodes(factory.packages.values())
 
         dependenciesQuery
+    }
+
+    def closure(startIncludes, startExcludes, stopIncludes, stopExcludes, maximumInboundDepth, maximumOutboundDepth) {
+        logger.info("Computing closure:")
+        logger.info("")
+        logger.info("    startIncludes: {}", startIncludes)
+        logger.info("    startExcludes: {}", startExcludes)
+        logger.info("")
+        logger.info("    stopIncludes: {}", stopIncludes)
+        logger.info("    stopExcludes: {}", stopExcludes)
+        logger.info("")
+        logger.info("    maximumInboundDepth: {}", maximumInboundDepth)
+        logger.info("    maximumOutboundDepth: {}", maximumOutboundDepth)
+        logger.info("")
+
+        def startCriteria  = new RegularExpressionSelectionCriteria();
+        startCriteria.globalIncludes = startIncludes;
+        startCriteria.globalExcludes = startExcludes;
+
+        def stopCriteria = new RegularExpressionSelectionCriteria();
+        stopCriteria.globalIncludes = stopIncludes;
+        stopCriteria.globalExcludes = stopExcludes;
+
+        def dependenciesClosure = new TransitiveClosure(startCriteria, stopCriteria);
+
+        try {
+            dependenciesClosure.maximumInboundDepth = Long.parseLong(maximumInboundDepth);
+        } catch (NumberFormatException ex) {
+            dependenciesClosure.maximumInboundDepth = TransitiveClosure.UNBOUNDED_DEPTH;
+        }
+
+        try {
+            dependenciesClosure.maximumOutboundDepth = Long.parseLong(maximumOutboundDepth);
+        } catch (NumberFormatException ex) {
+            dependenciesClosure.maximumOutboundDepth = TransitiveClosure.UNBOUNDED_DEPTH;
+        }
+
+        dependenciesClosure.traverseNodes(factory.packages.values());
+
+        dependenciesClosure
     }
 }
