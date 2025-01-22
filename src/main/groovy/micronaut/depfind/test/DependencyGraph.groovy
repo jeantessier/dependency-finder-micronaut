@@ -5,6 +5,7 @@ import com.jeantessier.classreader.ModifiedOnlyDispatcher
 import com.jeantessier.classreader.Monitor
 import com.jeantessier.classreader.TransientClassfileLoader
 import com.jeantessier.dependency.CodeDependencyCollector
+import com.jeantessier.dependency.CycleDetector
 import com.jeantessier.dependency.DeletingVisitor
 import com.jeantessier.dependency.GraphCopier
 import com.jeantessier.dependency.GraphSummarizer
@@ -227,24 +228,24 @@ class DependencyGraph {
         logger.info("    maximumOutboundDepth: {}", maximumOutboundDepth)
         logger.info("")
 
-        def startCriteria  = new RegularExpressionSelectionCriteria();
-        startCriteria.globalIncludes = startIncludes;
-        startCriteria.globalExcludes = startExcludes;
+        def startCriteria  = new RegularExpressionSelectionCriteria()
+        startCriteria.globalIncludes = startIncludes
+        startCriteria.globalExcludes = startExcludes
 
-        def stopCriteria = new RegularExpressionSelectionCriteria();
-        stopCriteria.globalIncludes = stopIncludes;
-        stopCriteria.globalExcludes = stopExcludes;
+        def stopCriteria = new RegularExpressionSelectionCriteria()
+        stopCriteria.globalIncludes = stopIncludes
+        stopCriteria.globalExcludes = stopExcludes
 
-        def dependenciesClosure = new TransitiveClosure(startCriteria, stopCriteria);
+        def dependenciesClosure = new TransitiveClosure(startCriteria, stopCriteria)
 
         try {
-            dependenciesClosure.maximumInboundDepth = Long.parseLong(maximumInboundDepth);
+            dependenciesClosure.maximumInboundDepth = maximumInboundDepth as long
         } catch (NumberFormatException ex) {
             dependenciesClosure.maximumInboundDepth = TransitiveClosure.UNBOUNDED_DEPTH;
         }
 
         try {
-            dependenciesClosure.maximumOutboundDepth = Long.parseLong(maximumOutboundDepth);
+            dependenciesClosure.maximumOutboundDepth = maximumOutboundDepth as long
         } catch (NumberFormatException ex) {
             dependenciesClosure.maximumOutboundDepth = TransitiveClosure.UNBOUNDED_DEPTH;
         }
@@ -253,4 +254,37 @@ class DependencyGraph {
 
         dependenciesClosure
     }
+
+    def cycles(packageScope, classScope, featureScope, scopeIncludes, scopeExcludes, maximumCycleLength) {
+        logger.info("Cycles graph:")
+        logger.info("")
+        logger.info("    packageScope: {}", packageScope)
+        logger.info("    classScope: {}", classScope)
+        logger.info("    featureScope: {}", featureScope)
+        logger.info("    scopeIncludes: {}", scopeIncludes)
+        logger.info("    scopeExcludes: {}", scopeExcludes)
+        logger.info("")
+        logger.info("    maximumCycleLength: {}", maximumCycleLength)
+        logger.info("")
+
+        def scopeCriteria  = new RegularExpressionSelectionCriteria()
+
+        scopeCriteria.matchingPackages = packageScope
+        scopeCriteria.matchingClasses = classScope
+        scopeCriteria.matchingFeatures = featureScope
+        scopeCriteria.globalIncludes = scopeIncludes
+        scopeCriteria.globalExcludes = scopeExcludes
+
+        CycleDetector detector = new CycleDetector(scopeCriteria)
+        try {
+            detector.maximumCycleLength = maximumCycleLength as int
+        } catch (NumberFormatException ex) {
+            // Ignore
+        }
+
+        detector.traverseNodes(factory.packages.values())
+
+        detector.cycles
+    }
+
 }
