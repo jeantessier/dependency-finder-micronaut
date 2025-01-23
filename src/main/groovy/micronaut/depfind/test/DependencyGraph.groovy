@@ -11,6 +11,7 @@ import com.jeantessier.dependency.GraphCopier
 import com.jeantessier.dependency.GraphSummarizer
 import com.jeantessier.dependency.LinkMaximizer
 import com.jeantessier.dependency.LinkMinimizer
+import com.jeantessier.dependency.MetricsGatherer
 import com.jeantessier.dependency.NodeFactory
 import com.jeantessier.dependency.NodeLoader
 import com.jeantessier.dependency.RegularExpressionSelectionCriteria
@@ -285,6 +286,45 @@ class DependencyGraph {
         detector.traverseNodes(factory.packages.values())
 
         detector.cycles
+    }
+
+    def metrics(packageScope, classScope, featureScope, scopeIncludes, scopeExcludes, packageFilter, classFilter, featureFilter, filterIncludes, filterExcludes) {
+        logger.info("Graph metrics:")
+        logger.info("")
+        logger.info("    packageScope: {}", packageScope)
+        logger.info("    classScope: {}", classScope)
+        logger.info("    featureScope: {}", featureScope)
+        logger.info("    scopeIncludes: {}", scopeIncludes)
+        logger.info("    scopeExcludes: {}", scopeExcludes)
+        logger.info("")
+        logger.info("    packageFilter: {}", packageFilter)
+        logger.info("    classFilter: {}", classFilter)
+        logger.info("    featureFilter: {}", featureFilter)
+        logger.info("    filterIncludes: {}", filterIncludes)
+        logger.info("    filterExcludes: {}", filterExcludes)
+        logger.info("")
+
+        def scopeCriteria  = new RegularExpressionSelectionCriteria()
+        def filterCriteria = new RegularExpressionSelectionCriteria()
+
+        scopeCriteria.matchingPackages = packageScope
+        scopeCriteria.matchingClasses = classScope
+        scopeCriteria.matchingFeatures = featureScope
+        scopeCriteria.globalIncludes = scopeIncludes
+        scopeCriteria.globalExcludes = scopeExcludes
+
+        filterCriteria.matchingPackages = packageFilter
+        filterCriteria.matchingClasses = classFilter
+        filterCriteria.matchingFeatures = featureFilter
+        filterCriteria.globalIncludes = filterIncludes
+        filterCriteria.globalExcludes = filterExcludes
+
+        SelectiveTraversalStrategy strategy = new SelectiveTraversalStrategy(scopeCriteria, filterCriteria);
+        MetricsGatherer metrics = new MetricsGatherer(strategy);
+
+        metrics.traverseNodes(factory.packages.values());
+
+        metrics
     }
 
 }
