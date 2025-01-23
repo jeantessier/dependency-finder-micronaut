@@ -1,7 +1,6 @@
 package micronaut.depfind.test
 
 import com.jeantessier.dependency.JSONMetricsReport
-import com.jeantessier.dependency.JSONPrinter
 import io.micronaut.core.annotation.Introspected
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
