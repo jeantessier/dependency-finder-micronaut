@@ -37,6 +37,8 @@ class MetricsController {
         def filterExcludes = []
 
         def listElements = false
+        def histograms = false
+        def chart = false
     }
 
     @Post
@@ -44,7 +46,7 @@ class MetricsController {
         logger.info("POST metrics")
         logger.info("    scope:  package: {}, class: {}, feature: {}, includes: \"{}\", excludes: \"{}\"", command.packageScope, command.classScope, command.featureScope, command.scopeIncludes, command.scopeExcludes)
         logger.info("    filter: package: {}, class: {}, feature: {}, includes: \"{}\", excludes: \"{}\"", command.packageFilter, command.classFilter, command.featureFilter, command.filterIncludes, command.filterExcludes)
-        logger.info("    list: elements: {}", command.listElements)
+        logger.info("    list: elements: {}, histograms {}, chart {}", command.listElements, command.histograms, command.chart)
 
         def dependenciesMetrics = graph.metrics(
                 command.packageScope,
@@ -62,6 +64,22 @@ class MetricsController {
         def out = new StringWriter()
         def reporter = new JSONMetricsReport(new PrintWriter(out))
         reporter.listingElements = command.listElements
+        reporter.showingClassesPerPackageChart = command.chart
+        reporter.showingFeaturesPerClassChart = command.chart
+        reporter.showingInboundsPerPackageChart = command.chart
+        reporter.showingOutboundsPerPackageChart = command.chart
+        reporter.showingInboundsPerClassChart = command.chart
+        reporter.showingOutboundsPerClassChart = command.chart
+        reporter.showingInboundsPerFeatureChart = command.chart
+        reporter.showingOutboundsPerFeatureChart = command.chart
+        reporter.showingClassesPerPackageHistogram = command.histograms
+        reporter.showingFeaturesPerClassHistogram = command.histograms
+        reporter.showingInboundsPerPackageHistogram = command.histograms
+        reporter.showingOutboundsPerPackageHistogram = command.histograms
+        reporter.showingInboundsPerClassHistogram = command.histograms
+        reporter.showingOutboundsPerClassHistogram = command.histograms
+        reporter.showingInboundsPerFeatureHistogram = command.histograms
+        reporter.showingOutboundsPerFeatureHistogram = command.histograms
 
         reporter.process(dependenciesMetrics)
 
