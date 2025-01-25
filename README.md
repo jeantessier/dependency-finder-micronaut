@@ -29,16 +29,23 @@ for more options.
 ./gradlew dockerBuild
 ```
 
+And tag the image with the name in the Docker repository.
+
+```base
+docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:1.4.1-rc1
+docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:latest
+```
+
 Once you have a Docker image, you can create a container.
 
 ```bash
 docker run \
-  --name dependencyfinder
+  --name dependencyfinder \
   --detach \
   --publish "8080:8080" \
-  --volume ./lib/DependencyFinder-SNAPSHOT.jar:/home/app/lib/DependencyFinder-SNAPSHOT.jar:ro \ 
-  --volume ./df.xml:/home/app/df.xml:ro \ 
-  micronaut-depfind-test
+  --volume ./lib/DependencyFinder-SNAPSHOT.jar:/home/app/lib/DependencyFinder-SNAPSHOT.jar:ro \
+  --volume ./df.xml:/home/app/df.xml:ro \
+  jeantessier/dependency-finder-micronaut
 ```
 
 The `--volume` params will mount the source and graph files the app expects, 
@@ -50,7 +57,7 @@ To clean up Docker:
 ```bash
 docker stop dependencyfinder
 docker rm dependencyfinder
-docker rmi micronaut-depfind-test
+docker rmi micronaut-depfind-test jeantessier/dependency-finder-micronaut
 ```
 
 ## Getting a Graph in Memory
