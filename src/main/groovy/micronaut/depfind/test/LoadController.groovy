@@ -9,7 +9,7 @@ import io.micronaut.http.annotation.Post
 import jakarta.inject.Inject
 import org.slf4j.LoggerFactory
 
-@Controller("/load")
+@Controller("/api/load")
 class LoadController {
 
     private static final logger = LoggerFactory.getLogger(LoadController)

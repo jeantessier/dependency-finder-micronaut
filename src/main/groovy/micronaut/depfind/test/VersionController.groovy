@@ -6,7 +6,7 @@ import io.micronaut.http.annotation.Get
 import com.jeantessier.dependencyfinder.Version
 import jakarta.inject.Inject
 
-@Controller("/version")
+@Controller("/api/version")
 class VersionController {
 
     final Version version

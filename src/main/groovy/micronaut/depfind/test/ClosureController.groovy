@@ -11,7 +11,7 @@ import io.micronaut.serde.annotation.Serdeable
 import jakarta.inject.Inject
 import org.slf4j.LoggerFactory
 
-@Controller("/closure")
+@Controller("/api/closure")
 class ClosureController {
 
     private static final logger = LoggerFactory.getLogger(ClosureController)

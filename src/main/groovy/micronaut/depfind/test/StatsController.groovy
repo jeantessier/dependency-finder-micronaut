@@ -4,7 +4,7 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import jakarta.inject.Inject
 
-@Controller("/stats")
+@Controller("/api/stats")
 class StatsController {
 
     final DependencyGraph graph

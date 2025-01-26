@@ -9,7 +9,7 @@ import io.micronaut.serde.annotation.Serdeable
 import jakarta.inject.Inject
 import org.slf4j.LoggerFactory
 
-@Controller("/cycles")
+@Controller("/api/cycles")
 class CyclesController {
 
     private static final logger = LoggerFactory.getLogger(CyclesController)
