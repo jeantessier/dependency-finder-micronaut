@@ -25,9 +25,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Generate distribution artifacts
-        run: ./gradlew dockerBuild
-
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
@@ -48,12 +45,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: |
-            version=${{ github.ref_name }}
-          push: true
-          tags: |
-            jeantessier/dependency-finder-micronaut:${{ github.ref_name }}
-            jeantessier/dependency-finder-micronaut:latest
+        run: |
+          ./gradlew dockerBuild
+          docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:${{ github.ref_name }}
+          docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:latest
+          docker push jeantessier/dependency-finder-micronaut:${{ github.ref_name }}
+          docker push jeantessier/dependency-finder-micronaut:latest
