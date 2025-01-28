@@ -25,6 +25,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      - name: Generate distribution artifacts
+        run: ./gradlew build
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
