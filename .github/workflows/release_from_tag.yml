@@ -35,7 +35,7 @@ jobs:
           body: |
             Release ${{ github.ref_name }}
             
-            Compiled with Java 21.
+            **Full Changelog**: https://github.com/jeantessier/micronaut-depfind-test/compare/${{ github.ref_name }}...${{ github.ref_name }}
           files: build/libs/*
 
       - name: URL to new release
