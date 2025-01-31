@@ -20,6 +20,7 @@ dependencies {
     compileOnly("io.micronaut.serde:micronaut-serde-processor")
     runtimeOnly("ch.qos.logback:logback-classic")
     testImplementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-management")
 
     implementation(files("lib/DependencyFinder-SNAPSHOT.jar"))
     implementation("org.apache.logging.log4j:log4j-api")
