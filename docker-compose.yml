@@ -1,0 +1,13 @@
+#
+# docker compose up -d
+#
+
+services:
+
+    depfind-micronaut:
+        image: jeantessier/dependency-finder-micronaut:latest
+        expose:
+          - 8080
+        environment:
+            dependency.finder.load.file: /code/df.xml
+            dependency.finder.extract.source: /code

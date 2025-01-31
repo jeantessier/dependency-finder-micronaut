@@ -21,6 +21,8 @@ The app will run on port `8080`.
 
 ### In Docker
 
+#### Building the Image
+
 First, build the image.  See the
 [Micronaut Docker documentation](https://guides.micronaut.io/latest/micronaut-docker-image-gradle-groovy.html)
 for more options.
@@ -36,21 +38,32 @@ docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:
 docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:latest
 ```
 
+#### Run a Container
+
 Once you have a Docker image, you can create a container.
+
+The default configuration gets dependency graphs from local files.  This is
+suitable when running the app outside Docker, but does not work anymore when
+inside a container.
+
+Use `--env` to override the locations for the Extract and Load pages.
+
+Use `--volume` to mount actual data at the locations you specified with `--env`.
+
+This example maps the local files from the default configuration to `/code` in
+the container.
 
 ```bash
 docker run \
   --name dependencyfinder \
   --detach \
   --publish "8080:8080" \
-  --volume ./lib/DependencyFinder-SNAPSHOT.jar:/home/app/lib/DependencyFinder-SNAPSHOT.jar:ro \
-  --volume ./df.xml:/home/app/df.xml:ro \
+  --env dependency.finder.load.file=/code/df.xml \
+  --env dependency.finder.extract.source=/code \
+  --volume ./lib/DependencyFinder-SNAPSHOT.jar:/code/DependencyFinder.jar:ro \
+  --volume ./df.xml:/code/df.xml:ro \
   jeantessier/dependency-finder-micronaut
 ```
-
-The `--volume` params will mount the source and graph files the app expects, 
-according to `application.properties`.  If you change the configuration, you 
-will need to adjust these params accordingly.
 
 To clean up Docker:
 
@@ -58,6 +71,41 @@ To clean up Docker:
 docker stop dependencyfinder
 docker rm dependencyfinder
 docker rmi micronaut-depfind-test jeantessier/dependency-finder-micronaut
+```
+
+#### Docker Compose
+
+Instead of creating a custom container, you can use Docker Compose to store all
+config in the `docker-compose.yml` and `docker-compose.override.yml` files.
+
+The default configuration gets dependency graphs from local files.  This is
+suitable when running the app outside Docker, but does not work anymore when
+inside a container.
+
+Use `environment` to override the locations for the Extract and Load pages.
+
+Use `volumes` to mount actual data at the locations you specified in 
+`environment`.
+
+The sample `docker-compose.yml` and `docker-compose.override.yml` files map the
+local files from the default configuration to `/code` in the container.
+
+To run the container:
+
+```bash
+docker compose up -d
+```
+
+To stop the container:
+
+```bash
+docker compose stop
+```
+
+To clean up Docker:
+
+```bash
+docker compose down
 ```
 
 ## Getting a Graph in Memory

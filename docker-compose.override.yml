@@ -1,0 +1,12 @@
+#
+# docker compose up -d
+#
+
+services:
+
+    depfind-micronaut:
+        ports:
+          - "8080:8080"
+        volumes:
+          - ./lib/DependencyFinder-SNAPSHOT.jar:/code/DependencyFinder.jar:ro
+          - ./df.xml:/code/df.xml:ro
