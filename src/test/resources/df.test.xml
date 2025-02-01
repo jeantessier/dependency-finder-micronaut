@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE dependencies SYSTEM "https://jeantessier.github.io/dependency-finder/dtd/dependencies.dtd">
+
+<dependencies>
+    <package confirmed="yes">
+        <name simple-name="a">a</name>
+        <outbound type="package" confirmed="yes">b</outbound>
+        <inbound type="package" confirmed="yes">c</inbound>
+    </package>
+    <package confirmed="yes">
+        <name simple-name="b">b</name>
+        <outbound type="package" confirmed="yes">c</outbound>
+        <inbound type="package" confirmed="yes">a</inbound>
+    </package>
+    <package confirmed="yes">
+        <name simple-name="c">c</name>
+        <outbound type="package" confirmed="yes">a</outbound>
+        <inbound type="package" confirmed="yes">b</inbound>
+    </package>
+    <package confirmed="yes">
+        <name simple-name="d">d</name>
+        <outbound type="package" confirmed="yes">e</outbound>
+        <inbound type="package" confirmed="yes">e</inbound>
+    </package>
+    <package confirmed="yes">
+        <name simple-name="e">e</name>
+        <outbound type="package" confirmed="yes">d</outbound>
+        <inbound type="package" confirmed="yes">d</inbound>
+    </package>
+    <package confirmed="yes">
+        <name simple-name="empty">empty</name>
+    </package>
+</dependencies>
