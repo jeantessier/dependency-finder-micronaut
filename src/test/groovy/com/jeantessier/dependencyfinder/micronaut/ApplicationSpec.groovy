@@ -1,4 +1,4 @@
-package micronaut.depfind.test
+package com.jeantessier.dependencyfinder.micronaut
 
 import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
@@ -6,7 +6,7 @@ import spock.lang.Specification
 import jakarta.inject.Inject
 
 @MicronautTest
-class MicronautDepfindTestSpec extends Specification {
+class ApplicationSpec extends Specification {
 
     @Inject
     EmbeddedApplication<?> application

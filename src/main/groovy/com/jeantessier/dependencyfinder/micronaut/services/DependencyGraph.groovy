@@ -1,4 +1,4 @@
-package micronaut.depfind.test
+package com.jeantessier.dependencyfinder.micronaut.services
 
 import com.jeantessier.classreader.ClassfileLoaderEventSource
 import com.jeantessier.classreader.ModifiedOnlyDispatcher

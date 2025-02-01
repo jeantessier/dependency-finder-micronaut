@@ -1,8 +1,9 @@
-package micronaut.depfind.test
+package com.jeantessier.dependencyfinder.micronaut.controllers
 
 import com.jeantessier.dependency.GraphSummarizer
 import com.jeantessier.dependency.JSONPrinter
 import com.jeantessier.dependency.RegularExpressionSelectionCriteria
+import com.jeantessier.dependencyfinder.micronaut.services.DependencyGraph
 import io.micronaut.core.annotation.Introspected
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller

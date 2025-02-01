@@ -1,4 +1,4 @@
-package micronaut.depfind.test
+package com.jeantessier.dependencyfinder.micronaut.controllers
 
 import io.micronaut.serde.annotation.Serdeable
 

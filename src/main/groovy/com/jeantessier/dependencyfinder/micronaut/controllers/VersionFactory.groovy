@@ -1,4 +1,4 @@
-package micronaut.depfind.test
+package com.jeantessier.dependencyfinder.micronaut.controllers
 
 import com.jeantessier.dependencyfinder.Version
 import io.micronaut.context.annotation.Factory

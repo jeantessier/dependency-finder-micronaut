@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: micronaut.depfind.test
+defaultPackage: com.jeantessier.dependencyfinder.micronaut
 testFramework: spock
 sourceLanguage: groovy
 buildTool: gradle

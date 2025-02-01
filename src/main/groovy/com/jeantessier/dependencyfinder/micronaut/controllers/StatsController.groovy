@@ -1,5 +1,6 @@
-package micronaut.depfind.test
+package com.jeantessier.dependencyfinder.micronaut.controllers
 
+import com.jeantessier.dependencyfinder.micronaut.services.DependencyGraph
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import jakarta.inject.Inject

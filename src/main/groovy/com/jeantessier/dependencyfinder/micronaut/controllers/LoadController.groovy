@@ -1,5 +1,6 @@
-package micronaut.depfind.test
+package com.jeantessier.dependencyfinder.micronaut.controllers
 
+import com.jeantessier.dependencyfinder.micronaut.services.DependencyGraph
 import io.micronaut.context.annotation.Value
 import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpResponse

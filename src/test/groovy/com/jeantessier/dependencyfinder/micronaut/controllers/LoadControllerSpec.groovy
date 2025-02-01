@@ -1,4 +1,4 @@
-package micronaut.depfind.test
+package com.jeantessier.dependencyfinder.micronaut.controllers
 
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.HttpClient

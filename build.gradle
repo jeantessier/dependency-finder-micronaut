@@ -5,8 +5,8 @@ plugins {
     id("io.micronaut.aot") version "4.4.4"
 }
 
-version = "0.1"
-group = "micronaut.depfind.test"
+version = "1.4.1"
+group = "com.jeantessier.dependencyfinder.micronaut"
 
 repositories {
     mavenCentral()
@@ -31,7 +31,7 @@ dependencies {
 
 
 application {
-    mainClass = "micronaut.depfind.test.Application"
+    mainClass = "com.jeantessier.dependencyfinder.micronaut.Application"
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("21")
@@ -46,7 +46,7 @@ micronaut {
     testRuntime("spock2")
     processing {
         incremental(true)
-        annotations("micronaut.depfind.test.*")
+        annotations("com.jeantessier.dependencyfinder.micronaut.*")
     }
     aot {
         // Please review carefully the optimizations enabled below

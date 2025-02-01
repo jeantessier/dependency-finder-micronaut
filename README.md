@@ -115,7 +115,7 @@ load a graph that has already been extracted.
 
 ### To Extract a Graph From Code
 
-List your JAR files in the `dependency.finder.graph.source` config.
+List your JAR files in the `dependency.finder.extract.source` config.
 
 A `GET` request to `/extract` returns details about the graph
 currently in memory.
@@ -219,7 +219,7 @@ removed from the graph.
 
 ### To Load a Graph From a File
 
-List your XML files in the `dependency.finder.graph.file` config.
+List your XML files in the `dependency.finder.load.file` config.
 
 A `GET` request to `/load` returns details about the graph
 currently in memory.
