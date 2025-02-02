@@ -38,8 +38,8 @@ class MetricsController {
         def filterExcludes = []
 
         def listElements = false
-        def histograms = false
         def chart = false
+        def histograms = false
     }
 
     @Post
@@ -47,7 +47,7 @@ class MetricsController {
         logger.info("POST metrics")
         logger.info("    scope:  package: {}, class: {}, feature: {}, includes: \"{}\", excludes: \"{}\"", command.packageScope, command.classScope, command.featureScope, command.scopeIncludes, command.scopeExcludes)
         logger.info("    filter: package: {}, class: {}, feature: {}, includes: \"{}\", excludes: \"{}\"", command.packageFilter, command.classFilter, command.featureFilter, command.filterIncludes, command.filterExcludes)
-        logger.info("    list: elements: {}, histograms {}, chart {}", command.listElements, command.histograms, command.chart)
+        logger.info("    list elements: {}, chart: {}, histograms: {}", command.listElements, command.chart, command.histograms)
 
         def dependenciesMetrics = graph.metrics(
                 command.packageScope,
