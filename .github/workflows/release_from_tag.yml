@@ -35,7 +35,7 @@ jobs:
           body: |
             Release ${{ github.ref_name }}
             
-            **Full Changelog**: https://github.com/jeantessier/micronaut-depfind-test/compare/${{ github.ref_name }}...${{ github.ref_name }}
+            **Full Changelog**: https://github.com/jeantessier/dependency-finder-micronaut/compare/${{ github.ref_name }}...${{ github.ref_name }}
           files: build/libs/*
 
       - name: URL to new release
@@ -50,7 +50,7 @@ jobs:
       - name: Build and push
         run: |
           ./gradlew dockerBuild
-          docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:${{ github.ref_name }}
-          docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:latest
+          docker image tag dependency-finder-micronaut jeantessier/dependency-finder-micronaut:${{ github.ref_name }}
+          docker image tag dependency-finder-micronaut jeantessier/dependency-finder-micronaut:latest
           docker push jeantessier/dependency-finder-micronaut:${{ github.ref_name }}
           docker push jeantessier/dependency-finder-micronaut:latest

@@ -34,8 +34,8 @@ for more options.
 And tag the image with the name in the Docker repository.
 
 ```base
-docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:1.4.1-rc1
-docker image tag micronaut-depfind-test jeantessier/dependency-finder-micronaut:latest
+docker image tag dependency-finder-micronaut jeantessier/dependency-finder-micronaut:1.4.1-rc1
+docker image tag dependency-finder-micronaut jeantessier/dependency-finder-micronaut:latest
 ```
 
 #### Run a Container
@@ -70,7 +70,7 @@ To clean up Docker:
 ```bash
 docker stop dependencyfinder
 docker rm dependencyfinder
-docker rmi micronaut-depfind-test jeantessier/dependency-finder-micronaut
+docker rmi dependency-finder-micronaut jeantessier/dependency-finder-micronaut
 ```
 
 #### Docker Compose
