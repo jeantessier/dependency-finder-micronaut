@@ -336,11 +336,11 @@ And the response will be shaped like:
 ]
 ```
 
-## Micronaut 4.10.4 Documentation
+## Micronaut 4.10.5 Documentation
 
-- [User Guide](https://docs.micronaut.io/4.10.4/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.10.4/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.10.4/guide/configurationreference.html)
+- [User Guide](https://docs.micronaut.io/4.10.5/guide/index.html)
+- [API Reference](https://docs.micronaut.io/4.10.5/api/index.html)
+- [Configuration Reference](https://docs.micronaut.io/4.10.5/guide/configurationreference.html)
 - [Micronaut Guides](https://guides.micronaut.io/index.html)
 ---
 
@@ -354,4 +354,5 @@ And the response will be shaped like:
 ## Feature micronaut-aot documentation
 
 - [Micronaut AOT documentation](https://micronaut-projects.github.io/micronaut-aot/latest/guide/)
+
 
