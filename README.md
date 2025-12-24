@@ -300,12 +300,12 @@ In this example, the request will look like:
 
 ```json
 {
-    "filterIncludes": "/^com.jeantessier/",
-    "packageFilter": true,
-    "packageScope": true,
-    "scopeIncludes": "/^com.jeantessier/",
-    "showEmptyNodes": true,
-    "showInbounds": true
+  "filterIncludes": "/^com.jeantessier/",
+  "packageFilter": true,
+  "packageScope": true,
+  "scopeIncludes": "/^com.jeantessier/",
+  "showEmptyNodes": true,
+  "showInbounds": true
 }
 ```
 
@@ -313,26 +313,26 @@ And the response will be shaped like:
 
 ```json
 [
-    {
+  {
+    "type": "package",
+    "confirmed": "true",
+    "name": "com.jeantessier.classreader",
+    "outbound": [
+      {
         "type": "package",
         "confirmed": "true",
-        "name": "com.jeantessier.classreader",
-        "outbound": [
-            {
-                "type": "package",
-                "confirmed": "true",
-                "name": "com.jeantessier.classreader.impl"
-            },
-            {
-                "type": "package",
-                "confirmed": "true",
-                "name": "com.jeantessier.text"
-            }
-        ],
-        "inbound": [],
-        "classes": []
-    },
-    ...
+        "name": "com.jeantessier.classreader.impl"
+      },
+      {
+        "type": "package",
+        "confirmed": "true",
+        "name": "com.jeantessier.text"
+      }
+    ],
+    "inbound": [],
+    "classes": []
+  },
+  ...
 ]
 ```
 
