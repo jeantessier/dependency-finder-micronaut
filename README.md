@@ -336,16 +336,16 @@ And the response will be shaped like:
 ]
 ```
 
-## Micronaut 4.10.12 Documentation
+## Micronaut 4.10.13 Documentation
 
-- [User Guide](https://docs.micronaut.io/4.10.12/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.10.12/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.10.12/guide/configurationreference.html)
+- [User Guide](https://docs.micronaut.io/4.10.13/guide/index.html)
+- [API Reference](https://docs.micronaut.io/4.10.13/api/index.html)
+- [Configuration Reference](https://docs.micronaut.io/4.10.13/guide/configurationreference.html)
 - [Micronaut Guides](https://guides.micronaut.io/index.html)
 ---
 
-- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
 - [Shadow Gradle Plugin](https://gradleup.com/shadow/)
+- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
 ## Feature micronaut-aot documentation
 
 
