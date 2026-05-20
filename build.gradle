@@ -1,8 +1,8 @@
 plugins {
     id("groovy") 
-    id("com.gradleup.shadow") version "8.3.9"
-    id("io.micronaut.application") version "4.6.2"
-    id("io.micronaut.aot") version "4.6.2"
+    id("com.gradleup.shadow") version "9.4.1"
+    id("io.micronaut.application") version "5.0.0"
+    id("io.micronaut.aot") version "5.0.0"
 }
 
 version = "1.4.3"
@@ -30,23 +30,37 @@ dependencies {
 }
 
 
+
 application {
     mainClass = "com.jeantessier.dependencyfinder.micronaut.Application"
 }
+
 java {
-    sourceCompatibility = JavaVersion.toVersion("21")
-    targetCompatibility = JavaVersion.toVersion("21")
+    sourceCompatibility = JavaVersion.toVersion("25")
+    targetCompatibility = JavaVersion.toVersion("25")
 }
 
 
+
+
 graalvmNative.toolchainDetection = false
+graalvmNative {
+    binaries {
+        all {
+            buildArgs.add("-H:+SharedArenaSupport")
+        }
+    }
+}
+
+
+
 
 micronaut {
     runtime("netty")
     testRuntime("spock2")
     processing {
         incremental(true)
-        annotations("com.jeantessier.dependencyfinder.micronaut.*")
+        annotations("blank.*")
     }
     aot {
         // Please review carefully the optimizations enabled below
@@ -60,8 +74,25 @@ micronaut {
         optimizeNetty = true
         replaceLogbackXml = true
     }
+
 }
 
-tasks.named("dockerfileNative") {
-    jdkVersion = "21"
+tasks.named("dockerfile") {
+
+    baseImage = "eclipse-temurin:25-jre"
 }
+
+
+
+
+
+
+
+// https://docs.gradle.org/current/userguide/upgrading_major_version_9.html#test_task_fails_when_no_tests_are_discovered
+tasks.withType(AbstractTestTask).configureEach {
+    failOnNoDiscoveredTests = false
+}
+
+
+
+

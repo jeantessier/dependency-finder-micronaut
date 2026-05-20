@@ -3,4 +3,4 @@ defaultPackage: com.jeantessier.dependencyfinder.micronaut
 testFramework: spock
 sourceLanguage: groovy
 buildTool: gradle
-features: [app-name, gradle, groovy, groovy-application, http-client-test, logback, micronaut-aot, micronaut-build, micronaut-http-validation, netty-server, properties, readme, serialization-jackson, shade, spock, static-resources]
+features: [app-name, gradle, groovy, groovy-application, http-client-test, logback, micronaut-aot, micronaut-build, micronaut-configuration-validation-gradle-plugin, micronaut-http-validation, netty-server, properties, readme, serialization-jackson, shade, spock, static-resources]
