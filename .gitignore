@@ -1,11 +1,8 @@
 Thumbs.db
-.DS_Store
 .gradle
-build/
 target/
 out/
 .micronaut/
-.idea
 *.iml
 *.ipr
 *.iws
@@ -13,6 +10,10 @@ out/
 .settings
 .classpath
 .factorypath
+build/
+# Tooling
+.idea/
+.DS_Store
 
 # Dependency graphs
 *df.xml
