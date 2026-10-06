@@ -2,6 +2,7 @@ package com.jeantessier.dependencyfinder.micronaut.controllers
 
 import com.jeantessier.dependencyfinder.micronaut.services.DependencyGraph
 import com.jeantessier.text.RegularExpressionParser
+import com.jeantessier.text.SimpleRegularExpressionParser
 import io.micronaut.context.annotation.Value
 import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpResponse
@@ -25,6 +26,8 @@ class ExtractController {
     @Value('${dependency.finder.extract.filter.excludes:}')
     String filterExcludes
 
+    final RegularExpressionParser parser = new SimpleRegularExpressionParser()
+
     final DependencyGraph graph
 
     def getSources() {
@@ -41,8 +44,8 @@ class ExtractController {
         [
                 extract: [
                         sources: sources,
-                        filterIncludes: RegularExpressionParser.parseRE(filterIncludes),
-                        filterExcludes: RegularExpressionParser.parseRE(filterExcludes),
+                        filterIncludes: parser.parseRE(filterIncludes),
+                        filterExcludes: parser.parseRE(filterExcludes),
                 ],
                 graph: graph.stats,
         ]
