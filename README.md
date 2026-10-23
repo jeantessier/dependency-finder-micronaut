@@ -336,16 +336,16 @@ And the response will be shaped like:
 ]
 ```
 
-## Micronaut 5.2.2 Documentation
+## Micronaut 5.2.3 Documentation
 
-- [User Guide](https://docs.micronaut.io/5.2.2/guide/index.html)
-- [API Reference](https://docs.micronaut.io/5.2.2/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/5.2.2/guide/configurationreference.html)
+- [User Guide](https://docs.micronaut.io/5.2.3/guide/index.html)
+- [API Reference](https://docs.micronaut.io/5.2.3/api/index.html)
+- [Configuration Reference](https://docs.micronaut.io/5.2.3/guide/configurationreference.html)
 - [Micronaut Guides](https://guides.micronaut.io/index.html)
 ---
 
-- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
 - [Shadow Gradle Plugin](https://gradleup.com/shadow/)
+- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
 ## Feature serialization-jackson documentation
 
 
